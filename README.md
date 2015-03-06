@@ -1,6 +1,6 @@
 # lx-brand-image-tests
 
-These are the [Serverspec](http://serverspec.org) tests used to validate lx-beand images.
+These are the [Serverspec](http://serverspec.org) tests used to validate lx-brand images.
 
 ## Installation and Setup
 
