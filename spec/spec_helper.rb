@@ -1,5 +1,8 @@
 require 'serverspec'
 require 'net/ssh'
+require 'yaml'
+
+properties = YAML.load_file('properties.yml')
 
 set :backend, :ssh
 
@@ -15,6 +18,7 @@ else
 end
 
 host = ENV['TARGET_HOST']
+set_property properties[host]
 
 options = Net::SSH::Config.for(host)
 
