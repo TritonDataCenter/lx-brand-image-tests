@@ -8,8 +8,9 @@ describe file('/etc/product') do
 	it { should contain "Documentation: #{property[:doc_url]}" }
 end
 
-# Version info used for MOTD
-describe file('/etc/update-motd.d/05-cloud-branding') do
+# MOTD
+describe file('/etc/motd') do
   it { should be_file }
-	it { should contain "VERSION=\"#{property[:version]}\"" }
+  it { should contain "Instance (#{property[:name]} #{property[:version]}" }
+  it { should contain "#{property[:doc_url]}" }
 end
