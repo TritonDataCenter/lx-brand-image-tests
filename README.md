@@ -21,14 +21,14 @@ Next, edit your `~/.ssh/config` file with the host information of the virtual ma
 
 For example, here's a properties.yml file:
 
-    ubuntu:
+    centos-6:
       :roles:
-        - guest-tools
-        - ubuntu
+        - common
+        - centos
 
 And an example `~/.ssh/config` file:
 
-    Host ubuntu
+    Host centos-6
       User root
       HostName xxx.xxx.xxx.xx
 
