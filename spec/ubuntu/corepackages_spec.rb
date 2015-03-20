@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe package('acpid') do
+describe package('openssh-server') do
   it { should be_installed }
 end
 
@@ -13,5 +13,9 @@ describe package('curl') do
 end
 
 describe package('wget') do
+  it { should be_installed }
+end
+
+describe package('locales') do
   it { should be_installed }
 end
