@@ -1,9 +1,5 @@
 require 'spec_helper'
 
-describe service('acpid') do
-	it { should be_enabled }
-end
-
 describe service('cron') do
   it { should be_enabled }
 end
