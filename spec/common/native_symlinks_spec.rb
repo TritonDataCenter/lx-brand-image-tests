@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# Symlinks for bnaries in /native/usr/sbin/
+# Test for symlinks for binaries in /native/usr/sbin/
 
 describe file('/usr/sbin/cpustat') do
   it { should be_symlink }
