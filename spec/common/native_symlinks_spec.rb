@@ -77,6 +77,11 @@ describe file('/usr/bin/kstat') do
 	it { should be_linked_to '/native/usr/bin/kstat' }
 end
 
+describe file('/usr/bin/zonename') do
+  it { should be_symlink }
+	it { should be_linked_to '/native/usr/bin/zonename' }
+end
+
 # Test for symlinks for binaries in /native/usr/sbin/
 
 describe file('/usr/sbin/cpustat') do
