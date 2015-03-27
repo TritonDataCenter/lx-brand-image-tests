@@ -17,9 +17,9 @@ describe file('/usr/bin/pfiles') do
 	it { should be_linked_to '/native/usr/bin/pfiles' }
 end
 
-describe file('/usr/bin/pflag') do
+describe file('/usr/bin/pflags') do
   it { should be_symlink }
-	it { should be_linked_to '/native/usr/bin/pflag' }
+	it { should be_linked_to '/native/usr/bin/pflags' }
 end
 
 describe file('/usr/bin/pldd') do
