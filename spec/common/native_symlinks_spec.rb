@@ -22,9 +22,12 @@ describe file('/usr/bin/pflags') do
 	it { should be_linked_to '/native/usr/bin/pflags' }
 end
 
-describe file('/usr/bin/pldd') do
-  it { should be_symlink }
-	it { should be_linked_to '/native/usr/bin/pldd' }
+# Skip this test for Ubuntu. It has a native version of pldd
+if !property[:name].include? "Ubuntu"
+  describe file('/usr/bin/pldd') do
+    it { should be_symlink }
+  	it { should be_linked_to '/native/usr/bin/pldd' }
+  end
 end
 
 describe file('/usr/bin/prstat') do
