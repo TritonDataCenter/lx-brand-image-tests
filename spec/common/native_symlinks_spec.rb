@@ -62,11 +62,6 @@ describe file('/usr/bin/pwait') do
 	it { should be_linked_to '/native/usr/bin/pwait' }
 end
 
-describe file('/usr/bin/pwdx') do
-  it { should be_symlink }
-	it { should be_linked_to '/native/usr/bin/pwdx' }
-end
-
 describe file('/usr/bin/truss') do
   it { should be_symlink }
 	it { should be_linked_to '/native/usr/bin/truss' }
