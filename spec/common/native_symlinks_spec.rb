@@ -74,7 +74,7 @@ end
 
 describe command('truss') do
   its(:exit_status) { should eq 2 }
-  its(:stdout) { should contain('usage:') }
+  its(:stderr) { should contain('usage:') }
 end
 
 describe file('/usr/bin/kstat') do
@@ -104,7 +104,7 @@ end
 
 describe command('cpustat') do
   its(:exit_status) { should eq 2 }
-  its(:stdout) { should contain('Usage:') }
+  its(:stderr) { should contain('Usage:') }
 end
 
 describe command('cpustat -h') do
@@ -146,5 +146,5 @@ end
 
 describe command('plockstat') do
   its(:exit_status) { should eq 2 }
-  its(:stdout) { should contain('Usage:') }
+  its(:stderr) { should contain('Usage:') }
 end
