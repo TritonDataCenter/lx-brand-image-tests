@@ -112,6 +112,7 @@ describe command('cpustat -h') do
   its(:stdout) { should contain('Usage:') }
 end
   
+# Tests for DTrace commands are in dtrace_spec.rb
 describe file('/usr/sbin/dtrace') do
   it { should be_symlink }
   it { should be_linked_to '/native/usr/sbin/dtrace' }
