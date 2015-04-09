@@ -22,7 +22,7 @@ end
 
 describe command('mdata-get test') do
   its(:exit_status) { should eq 1 }
-  its(:stdout) { should match /No metadata for 'test'/ }
+  its(:stderr) { should match /No metadata for 'test'/ }
 end
 
 describe command('mdata-list') do
