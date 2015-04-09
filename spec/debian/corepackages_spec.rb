@@ -23,3 +23,8 @@ end
 describe package('man-db') do
   it { should be_installed }
 end
+
+describe package('sudo') do
+  it { should be_installed }
+end
+
