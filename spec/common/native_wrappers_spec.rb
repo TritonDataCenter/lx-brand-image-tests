@@ -8,9 +8,9 @@ describe file('/usr/bin/arcstat') do
   it { should be_executable }
 end
 
-describe command('arcstat') do
-  its(:exit_status) { should eq 0 }
-end
+#describe command('arcstat') do
+#  its(:exit_status) { should eq 0 }
+#end
 
 describe file('/usr/bin/sysinfo') do
   it { should be_file }
@@ -28,9 +28,9 @@ describe file('/usr/bin/vfsstat') do
   it { should be_executable }
 end
 
-describe command('vfsstat') do
-  its(:exit_status) { should eq 0 }
-end
+#describe command('vfsstat') do
+#  its(:exit_status) { should eq 0 }
+#end
 
 # Test for wrappers for binaries in /usr/sbin/
 
