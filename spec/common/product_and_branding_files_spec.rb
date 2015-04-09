@@ -6,7 +6,7 @@ describe file('/etc/product') do
 	it { should contain "Name: Joyent Instance" }
 	it { should contain "Image: #{property[:name]} #{property[:version]}" }
 	it { should contain "Documentation: #{property[:doc_url]}" }
-  it { should contain "Description: #{property[:name]} #{property[:version]}" }
+  it { should contain "Description: #{property[:description]}" }
 end
 
 # MOTD

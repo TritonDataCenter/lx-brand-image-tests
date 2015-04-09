@@ -3,5 +3,6 @@ ubuntu-lx:
     - common
     - ubuntu
   :name: Ubuntu 14.04 LX Brand
+  :description: Ubuntu 14.04 64-bit lx-brand image.
   :version: 20150409
   :doc_url: https://docs.joyent.com/images/lx-brand-beta
