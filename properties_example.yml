@@ -2,3 +2,6 @@ ubuntu-lx:
   :roles:
     - common
     - ubuntu
+  :name: Ubuntu 14.04 LX Brand
+  :version: 20150409
+  :doc_url: https://docs.joyent.com/images/lx-brand-beta
