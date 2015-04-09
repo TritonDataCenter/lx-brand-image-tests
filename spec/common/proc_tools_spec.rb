@@ -51,7 +51,7 @@ describe command('pstop') do
 end
 
 describe command('ptime') do
-  its(:exit_status) { should eq 2 }
+  its(:exit_status) { should eq 1 }
   its(:stderr) { should contain('usage:') }
 end
 
