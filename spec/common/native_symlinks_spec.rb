@@ -117,3 +117,9 @@ describe file('/usr/sbin/plockstat') do
   it { should be_linked_to '/native/usr/sbin/plockstat' }
 end
 
+
+# Test to ensure symlinked binaries work
+
+describe command('zonename') do
+  its(:exit_status) { should eq 0 }
+end
