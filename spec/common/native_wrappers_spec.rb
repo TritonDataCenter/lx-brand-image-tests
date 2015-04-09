@@ -1,45 +1,31 @@
 require 'spec_helper'
 
-# Test for wrappers for binaries in /usr/bin/
+# Test mdata-* commands
 
-describe file('/usr/bin/arcstat') do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_executable }
-end
-
-describe command('arcstat') do
+describe command('mdata-put test test') do
   its(:exit_status) { should eq 0 }
 end
 
-describe file('/usr/bin/sysinfo') do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_executable }
+describe command('mdata-get test') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /test/ }
 end
 
-describe command('sysinfo') do
+describe command('mdata-list') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /test/ }
+end
+
+describe command('mdata-delete test') do
   its(:exit_status) { should eq 0 }
 end
 
-describe file('/usr/bin/vfsstat') do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_executable }
+describe command('mdata-get test') do
+  its(:exit_status) { should eq 1 }
+  its(:stdout) { should match /No metadata for 'test'/ }
 end
 
-describe command('vfsstat') do
+describe command('mdata-list') do
   its(:exit_status) { should eq 0 }
-end
-
-# Test for wrappers for binaries in /usr/sbin/
-
-describe file('/usr/sbin/zonememstat') do
-  it { should be_file }
-  it { should be_owned_by 'root' }
-  it { should be_executable }
-end
-
-describe command('zonememstat') do
-  its(:exit_status) { should eq 0 }
+  its(:stdout) { should_not match /test/ }
 end
