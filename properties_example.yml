@@ -1,4 +1,4 @@
-ubuntu:
+ubuntu-lx:
   :roles:
-    - guest-tools
+    - common
     - ubuntu
