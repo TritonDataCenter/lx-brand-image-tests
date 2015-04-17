@@ -148,3 +148,15 @@ describe command('plockstat') do
   its(:exit_status) { should eq 2 }
   its(:stderr) { should contain('Usage:') }
 end
+
+describe file('/usr/sbin/zfs') do
+  it { should be_symlink }
+  it { should be_linked_to '/native/usr/sbin/zfs' }
+end
+
+describe command('zfs') do
+  its(:exit_status) { should eq 2 }
+  its(:stderr) { should contain('usage:') }
+end
+
+
