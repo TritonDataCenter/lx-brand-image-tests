@@ -32,7 +32,19 @@ describe file('/lib/smartdc/mdata-fetch') do
   it { should be_executable }
 end
 
+describe file('/lib/smartdc/mount-zfs') do
+  it { should be_file }
+  it { should be_owned_by 'root' }
+  it { should be_executable }
+end
+
 describe file('/lib/smartdc/redhat') do
+  it { should be_file }
+  it { should be_owned_by 'root' }
+  it { should be_executable }
+end
+
+describe file('/lib/smartdc/set-provision-state') do
   it { should be_file }
   it { should be_owned_by 'root' }
   it { should be_executable }
