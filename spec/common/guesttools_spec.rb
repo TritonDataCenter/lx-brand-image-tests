@@ -2,6 +2,13 @@ require 'spec_helper'
 
 # Make sure all guest tools are installed in /lib/smartdc
 
+describe file('/lib/smartdc/alpine') do
+  it { should be_file }
+  it { should be_owned_by 'root' }
+  it { should be_executable }
+end
+
+
 describe file('/lib/smartdc/common.lib') do
   it { should be_file }
   it { should be_owned_by 'root' }
