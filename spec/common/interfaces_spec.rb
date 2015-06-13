@@ -10,15 +10,15 @@ describe interface('eth0') do
   it { should exist }
 end
 
-describe interface('eth0') do
-  it { should be_up }
-end
+# describe interface('eth0') do
+#   it { should be_up }
+# end
 
 # eth1
 describe interface('eth1') do
   it { should exist }
 end
 
-describe interface('eth1') do
-  it { should be_up }
-end
+# describe interface('eth1') do
+#   it { should be_up }
+# end
