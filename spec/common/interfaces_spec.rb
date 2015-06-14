@@ -10,15 +10,17 @@ describe interface('eth0') do
   it { should exist }
 end
 
-# describe interface('eth0') do
-#   it { should be_up }
-# end
+describe command('ifconfig eth0 | grep UP | wc -l') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /1/ }
+end
 
 # eth1
 describe interface('eth1') do
   it { should exist }
 end
 
-# describe interface('eth1') do
-#   it { should be_up }
-# end
+describe command('ifconfig eth1 | grep UP | wc -l') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /1/ }
+end
