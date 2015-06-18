@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe package('cron') do
+describe package('cronie') do
   it { should be_installed }
 end
 
