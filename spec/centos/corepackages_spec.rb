@@ -4,6 +4,10 @@ describe package('cronie') do
   it { should be_installed }
 end
 
+describe package('curl') do
+  it { should be_installed }
+end
+
 describe package('iputils') do
   it { should be_installed }
 end
@@ -22,6 +26,10 @@ describe package('sudo') do
 end
 
 describe package('vim-minimal') do
+  it { should be_installed }
+end
+
+describe package('wget') do
   it { should be_installed }
 end
 
