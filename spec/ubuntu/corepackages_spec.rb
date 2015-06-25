@@ -12,6 +12,10 @@ describe package('iputils-ping') do
   it { should be_installed }
 end
 
+describe package('less') do
+  it { should be_installed }
+end
+
 describe package('openssh-server') do
   it { should be_installed }
 end

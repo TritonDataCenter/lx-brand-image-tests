@@ -12,6 +12,10 @@ describe package('iputils') do
   it { should be_installed }
 end
 
+describe package('less') do
+  it { should be_installed }
+end
+
 # The @core installation does not include 'man'...
 describe package('man') do
   it { should be_installed }

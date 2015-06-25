@@ -8,11 +8,11 @@ describe package('curl') do
   it { should be_installed }
 end
 
-describe package('inetutils-ping') do
+describe package('iproute') do
   it { should be_installed }
 end
 
-describe package('iproute') do
+describe package('less') do
   it { should be_installed }
 end
 
