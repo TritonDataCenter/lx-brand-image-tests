@@ -4,12 +4,12 @@ require 'spec_helper'
 
 # CVE-2014-6271
 describe command("env x='() { :;}; echo vulnerable' bash -c \"echo this is a test\"") do
-  its(:stderr) { should_not match /vulnerable/ }
+  its(:stdout) { should_not match /vulnerable/ }
 end
 
 # CVE-2014-7169
 describe command("env X='() { (a)=>\' bash -c \"echo date\"") do
-  its(:stderr) { should match /date/ }
+  its(:stdout) { should match /date/ }
 end
 
 describe file('date') do
