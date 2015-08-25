@@ -8,3 +8,6 @@ describe service('sshd') do
   it { should be_enabled }
 end
 
+describe service('local') do
+  it { should be_enabled }
+end
