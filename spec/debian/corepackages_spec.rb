@@ -28,7 +28,15 @@ describe package('openssh-server') do
   it { should be_installed }
 end
 
+describe package('python-software-properties') do
+  it { should be_installed }
+end
+
 describe package('rsyslog') do
+  it { should be_installed }
+end
+
+describe package('software-properties-common') do
   it { should be_installed }
 end
 
