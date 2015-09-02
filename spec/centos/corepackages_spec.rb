@@ -33,7 +33,7 @@ describe package('sudo') do
   it { should be_installed }
 end
 
-describe package('vim-minimal') do
+describe package('vim') do
   it { should be_installed }
 end
 
