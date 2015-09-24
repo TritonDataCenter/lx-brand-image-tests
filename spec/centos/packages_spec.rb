@@ -17,6 +17,11 @@ describe package('man') do
   it { should be_installed }
 end
 
+# For CentOS 7. Required to install ifconfig
+describe package('net-tools') do
+  it { should be_installed }
+end
+
 describe package('openssh-clients') do
   it { should be_installed }
 end
