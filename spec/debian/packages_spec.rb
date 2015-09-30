@@ -8,6 +8,10 @@ describe package('cron') do
   it { should be_installed }
 end
 
+describe package('gettext-base') do
+  it { should be_installed }
+end
+
 describe package('iproute') do
   it { should be_installed }
 end

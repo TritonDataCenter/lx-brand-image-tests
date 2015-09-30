@@ -8,6 +8,10 @@ describe package('cronie') do
   it { should be_installed }
 end
 
+describe package('gettext') do
+  it { should be_installed }
+end
+
 describe package('iputils') do
   it { should be_installed }
 end
