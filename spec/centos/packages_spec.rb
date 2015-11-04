@@ -16,8 +16,8 @@ describe package('iputils') do
   it { should be_installed }
 end
 
-# The @core installation does not include 'man'...
-describe package('man') do
+# The @core installation on CentOS 6 does not include 'man'...
+describe package('man-db') do
   it { should be_installed }
 end
 
