@@ -17,8 +17,14 @@ describe package('iputils') do
 end
 
 # The @core installation on CentOS 6 does not include 'man'...
-describe package('man-db') do
-  it { should be_installed }
+if property[:name].include? "CentOS 6"
+	describe package('man') do
+  	it { should be_installed }
+	end
+else
+  describe package('man-db') do
+    it { should be_installed }
+  end
 end
 
 # For CentOS 7. Required to install ifconfig
