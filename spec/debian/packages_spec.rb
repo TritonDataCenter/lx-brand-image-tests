@@ -12,8 +12,16 @@ describe package('gettext-base') do
   it { should be_installed }
 end
 
-describe package('iproute') do
-  it { should be_installed }
+if property[:name].include? "Debian 8"
+  describe package('iproute2') do
+    it { should be_installed }
+  end
+end
+
+if property[:name].include? "Debian 7"
+  describe package('iproute') do
+    it { should be_installed }
+  end
 end
 
 describe package('net-tools') do
