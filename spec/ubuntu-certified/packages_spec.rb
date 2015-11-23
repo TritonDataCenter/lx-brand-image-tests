@@ -12,6 +12,10 @@ describe package('curl') do
   it { should be_installed }
 end
 
+describe package('less') do
+  it { should be_installed }
+end
+
 describe package('gettext-base') do
   it { should be_installed }
 end
@@ -55,3 +59,4 @@ end
 describe package('whiptail') do
   it { should be_installed }
 end
+
