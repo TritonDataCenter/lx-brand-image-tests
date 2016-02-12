@@ -3,6 +3,7 @@ require 'spec_helper'
 # This test requires a VM to be provision with two IPs, preferably one public
 # and one private.
 
+# TODO: This will need to be updated for 16.04
 # Test to ensure the VM has two interfaces, eth0 and eth1
 
 # eth0
