@@ -8,5 +8,7 @@ describe command("cat /etc/shadow | grep root | awk -F':' '{print $2;}'") do
 end
 
 
-
+# Need to fix the test somehow.
+# This will grep for ! * and and emty entry for root:
+#  sudo cat /etc/shadow | grep root| grep '^[^:]*:.\?:' 
 
