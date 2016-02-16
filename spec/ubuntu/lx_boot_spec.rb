@@ -22,7 +22,7 @@ end
 
 describe file('/etc/init/console.override') do
 	it { should be_file }
-	it { should contain "CONTAINER=smartos" }
+	its(:md5sum) { should eq '7ee0e4d8968d264ef99275a50e9cff20' }
 end
 
 describe file('/etc/init/container-detect.override') do
