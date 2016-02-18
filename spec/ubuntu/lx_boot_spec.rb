@@ -13,10 +13,10 @@ describe file('/etc/resolvconf/resolv.conf.d/tail') do
 end
 
 # Network interfaces
-describe file('/etc/network/interfaces.d/smartos') do
-	it { should be_file }
-	it { should contain "# AUTOMATIC ZONE CONFIG" }
-end
+# describe file('/etc/network/interfaces.d/smartos') do
+# 	it { should be_file }
+# 	it { should contain "# AUTOMATIC ZONE CONFIG" }
+# end
 
 ## Static overrides
 
