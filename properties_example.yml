@@ -1,7 +1,7 @@
 ubuntu-lx:
   :roles:
     - common-lx
-    - common-config
+    - image-config
     - ubuntu
   :name: Ubuntu 14.04 LX Brand
   :description: Ubuntu 14.04 64-bit lx-brand image.
