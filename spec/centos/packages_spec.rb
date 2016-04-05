@@ -40,6 +40,10 @@ describe package('sudo') do
   it { should be_installed }
 end
 
+describe package('tar') do
+  it { should be_installed }
+end
+
 describe package('which') do
   it { should be_installed }
 end
