@@ -30,7 +30,7 @@ describe file('/etc/init/container-detect.override') do
 	its(:md5sum) { should eq 'dfd990f3a6ed9ed8582a3bae564551d9' }
 end
 
-describe file('/etc/init/mountall.override') do
-	it { should be_file }
-	its(:md5sum) { should eq '77e43ed540b051c9dc22df649eb7b597' }
-end
+# describe file('/etc/init/mountall.override') do
+# 	it { should be_file }
+# 	its(:md5sum) { should eq '77e43ed540b051c9dc22df649eb7b597' }
+# end
