@@ -1,5 +1,9 @@
 require 'spec_helper'
 
+describe package('apt-transport-https') do
+  it { should be_installed }
+end
+
 describe package('ca-certificates') do
   it { should be_installed }
 end
