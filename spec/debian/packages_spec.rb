@@ -40,9 +40,19 @@ describe package('openssh-server') do
   it { should be_installed }
 end
 
-describe package('python-software-properties') do
-  it { should be_installed }
+
+if property[:name].include? "Debian 7"
+  describe package('python-software-properties') do
+    it { should be_installed }
+  end
 end
+
+if property[:name].include? "Debian 8"
+  describe package('python-software-properties') do
+    it { should be_installed }
+  end
+end
+
 
 describe package('rsyslog') do
   it { should be_installed }
