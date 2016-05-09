@@ -10,29 +10,37 @@ require 'spec_helper'
 # TODO: Move the command tests to common-lx?
 
 describe file('/etc/systemd/system/systemd-timedated.service.d/override.conf') do
-  it { should be_file }
-  its(:content) { should match /[Service]/ }
-  its(:content) { should match /PrivateTmp=no/ }
-  its(:content) { should match /PrivateDevices=no/ }
-  its(:content) { should match /PrivateNetwork=no/ }
-  its(:content) { should match /ProtectSystem=no/ }
-  its(:content) { should match /ProtectHome=no/ }
+  if file('/usr/bin/timedatectl').exists?
+    it { should be_file }
+    its(:content) { should match /[Service]/ }
+    its(:content) { should match /PrivateTmp=no/ }
+    its(:content) { should match /PrivateDevices=no/ }
+    its(:content) { should match /PrivateNetwork=no/ }
+    its(:content) { should match /ProtectSystem=no/ }
+    its(:content) { should match /ProtectHome=no/ }
+  end
 end
 
 describe command('timedatectl') do
-  its(:exit_status) { should eq 0 }
+  if file('/usr/bin/timedatectl').exists?
+    its(:exit_status) { should eq 0 }
+  end
 end
 
 describe file('/etc/systemd/system/systemd-hostnamed.service.d/override.conf') do
-  it { should be_file }
-  its(:content) { should match /[Service]/ }
-  its(:content) { should match /PrivateTmp=no/ }
-  its(:content) { should match /PrivateDevices=no/ }
-  its(:content) { should match /PrivateNetwork=no/ }
-  its(:content) { should match /ProtectSystem=no/ }
-  its(:content) { should match /ProtectHome=no/ }
+  if file('/usr/bin/hostnamectl').exists?
+    it { should be_file }
+    its(:content) { should match /[Service]/ }
+    its(:content) { should match /PrivateTmp=no/ }
+    its(:content) { should match /PrivateDevices=no/ }
+    its(:content) { should match /PrivateNetwork=no/ }
+    its(:content) { should match /ProtectSystem=no/ }
+    its(:content) { should match /ProtectHome=no/ }
+  end
 end
 
 describe command('hostnamectl') do
-  its(:exit_status) { should eq 0 }
+  if file('/usr/bin/hostnamectl').exists?
+    its(:exit_status) { should eq 0 }
+  end
 end
