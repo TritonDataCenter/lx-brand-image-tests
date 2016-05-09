@@ -10,6 +10,7 @@ end
 
 # On CentOS the package is called vim-enhanced
 
+# TODO: Check for /etc/redhat-release ?
 if property[:name].include? "CentOS"
   describe package('vim-enhanced') do
     it { should be_installed }
