@@ -16,9 +16,9 @@ describe "vim" do
   it "should be installed" do
     # CentOS uses a different pacakge name
     if file('/etc/redhat-release').exists?
-      package('vim-enhanced').installed?
+      expect(package("vim-enhanced")).to be_installed
     else
-      package('vim').installed?
+      expect(package("vim")).to be_installed
     end
   end
 end
