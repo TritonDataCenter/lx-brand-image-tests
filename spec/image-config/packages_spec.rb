@@ -11,13 +11,15 @@ end
 # On CentOS the package is called vim-enhanced
 
 # TODO: Check for /etc/redhat-release ?
-if property[:name].include? "CentOS"
-  describe package('vim-enhanced') do
-    it { should be_installed }
-  end
-else
-  describe package('vim') do
-    it { should be_installed }
+
+describe "vim" do
+  it "should be installed" do
+    # CentOS uses a different pacakge name
+    if file('/etc/redhat-release').exists?
+      package('vim-enhanced').installed?
+    else
+      package('vim').installed?
+    end
   end
 end
 
