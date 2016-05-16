@@ -52,6 +52,12 @@ describe package('sudo') do
   it { should be_installed }
 end
 
+if property[:name] !=~ /Ubuntu 14./
+  describe package('udev') do
+    it { should_not be_installed }
+  end
+end
+
 describe package('whiptail') do
   it { should be_installed }
 end
