@@ -6,7 +6,6 @@ require 'spec_helper'
 #   - https://github.com/joyent/centos-lx-brand-image-builder/issues/5
 #   - https://smartos.org/bugview/OS-5304
 
-# TODO: This will fail on non-systemd distros. Need logic to address that.
 # TODO: Move the command tests to common-lx?
 
 describe file('/etc/systemd/system/systemd-timedated.service.d/override.conf') do
