@@ -3,7 +3,9 @@ require 'spec_helper'
 # Test group add/delete actions
 # Also check the presence of sudoer groups
 
-if property[:name] =~ /Alpine/
+# Bail if OS is Alpine Linux
+# TODO: Add tests for Alpine Linux :)
+if file('/etc/alpine-release').exists?
   exit
 end
 
