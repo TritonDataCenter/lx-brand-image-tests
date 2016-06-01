@@ -15,8 +15,15 @@ describe command('hostnamectl') do
   end
 end
 
+describe command('localectl') do
+  if file('/usr/bin/localectl').exists?
+    its(:exit_status) { should eq 0 }
+  end
+end
+
 describe command('timedatectl') do
   if file('/usr/bin/timedatectl').exists?
     its(:exit_status) { should eq 0 }
   end
 end
+
