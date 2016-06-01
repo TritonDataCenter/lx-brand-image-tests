@@ -52,10 +52,13 @@ describe package('sudo') do
   it { should be_installed }
 end
 
-if property[:name] !=~ /Ubuntu 14./
+if property[:name] =~ /Ubuntu 14./
   describe package('udev') do
-    it { should_not be_installed }
+    it { should be_installed }
   end
+end
+
+if command('grep -v /etc/os-release ')
 end
 
 describe package('whiptail') do
