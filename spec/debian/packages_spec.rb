@@ -32,6 +32,10 @@ if property[:name].include? "Debian 7"
   end
 end
 
+describe package('keyboard-configuration') do
+  it { should be_installed }
+end
+
 describe package('net-tools') do
   it { should be_installed }
 end
