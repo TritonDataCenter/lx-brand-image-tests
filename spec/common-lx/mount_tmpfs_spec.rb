@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # Test mount commands for tmpfs
 
-describe command('mkdir /mnt/tmpfs') do
+describe command('mkdir -p /mnt/tmpfs') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -41,7 +41,7 @@ describe command('rm -R /mnt/tmpfs') do
 end
 
 # size option - should accept size in bytes, k/m/g bytes 
-describe command('mkdir /mnt/ramdisk') do
+describe command('mkdir -p /mnt/ramdisk') do
   its(:exit_status) { should eq 0 }
 end
 
