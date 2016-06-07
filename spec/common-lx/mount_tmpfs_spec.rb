@@ -84,20 +84,18 @@ describe command('umount /mnt/ramdisk') do
   its(:exit_status) { should eq 0 }
 end
 
-# skip gb size on LX for now due to OS-5272
-if ! property[:name].include? "LX"
-  describe command('mount -o size=1g -t tmpfs tmpfs /mnt/ramdisk') do
-    its(:exit_status) { should eq 0 }
-  end
 
-  describe command('df /mnt/ramdisk | grep 1048576 | wc -l') do
-    its(:exit_status) { should eq 0 }
-    its(:stdout) { should match /1/ }
-  end
+describe command('mount -o size=1g -t tmpfs tmpfs /mnt/ramdisk') do
+  its(:exit_status) { should eq 0 }
+end
 
-  describe command('umount /mnt/ramdisk') do
-    its(:exit_status) { should eq 0 }
-  end
+describe command('df /mnt/ramdisk | grep 1048576 | wc -l') do
+  its(:exit_status) { should eq 0 }
+  its(:stdout) { should match /1/ }
+end
+
+describe command('umount /mnt/ramdisk') do
+  its(:exit_status) { should eq 0 }
 end
 
 # Remount /dev/shm with size specified in percentage
