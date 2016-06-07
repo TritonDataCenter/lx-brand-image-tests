@@ -33,11 +33,11 @@ describe group('foo') do
   it { should_not exist }
 end
 
-if property[:name] =~ /Ubuntu/ or property[:name] =~ /Debian/
+if file('/etc/debian_version').exists?
   describe group('sudo') do
     it { should exist }
   end
-elsif property[:name] =~ /CentOS/
+elsif file('/etc/centos-release').exists?
   describe group('wheel') do
     it { should exist }
   end

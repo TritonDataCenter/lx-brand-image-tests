@@ -99,7 +99,7 @@ describe command('umount /mnt/ramdisk') do
 end
 
 # Remount /dev/shm with size specified in percentage
-if ! property[:name].include? "CentOS 6 LX"
+if ! file('/etc/centos-release').exists?
   describe file('/dev/shm') do
     it { should exist }
   end
@@ -136,7 +136,7 @@ describe command('umount /mnt/ramdisk') do
 end
 
 # Skip Alpine due to OS-5273 and packages not available in the image
-if ! property[:name].include? "Alpine"
+if ! file('/etc/alpine-release').exists?
   describe command('groupadd foo') do
     its(:exit_status) { should eq 0 }
   end

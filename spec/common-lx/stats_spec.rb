@@ -13,7 +13,7 @@ describe command('free') do
   its(:stdout) { should contain 'Swap' }
 end
 
-if ! property[:name].include? "Alpine"
+if ! file('/etc/alpine-release').exists?
   describe command('vmstat') do
     its(:exit_status) { should equal 0 }
   end
