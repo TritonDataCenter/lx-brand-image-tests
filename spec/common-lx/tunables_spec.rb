@@ -4,7 +4,7 @@ require 'spec_helper'
 # to zones, others are there simply to prevent syscall failure
 
 # configuration of net/core/somaxconn not supported on alpine yet
-if property[:name] =~ /Alpine/
+if file('/etc/alpine-release').exists?
   describe command('sysctl net.core.somaxconn') do
     its(:exit_status) { should equal 0 }
   end
