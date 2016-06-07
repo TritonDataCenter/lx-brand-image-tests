@@ -5,7 +5,9 @@ require 'spec_helper'
 # commands that take user as an argument (e.g. chown)
 # 
 
-if property[:name] =~ /Alpine/
+# Bail if OS is Alpine Linux
+# TODO: Add tests for Alpine Linux :)
+if file('/etc/alpine-release').exists?
   exit
 end
 
@@ -13,7 +15,8 @@ describe command('mkdir /home/bar') do
   its(:exit_status) { should eq 0 }
 end
 
-if property[:name] =~ /Ubuntu/ or property[:name] =~ /Debian/
+
+if file('/etc/debian_version').exists?
   describe command('useradd bar -g sudo -d /home/bar') do
     its(:exit_status) { should eq 0 }
   end
@@ -23,7 +26,7 @@ if property[:name] =~ /Ubuntu/ or property[:name] =~ /Debian/
     it { should belong_to_group 'sudo' }
     it { should have_home_directory '/home/bar' }
   end
-elsif property[:name] =~ /CentOS/
+elsif file('/etc/centos-release').exists?
   describe command('useradd bar -g wheel -d /home/bar') do
     its(:exit_status) { should eq 0 }
   end
