@@ -11,7 +11,7 @@ if file('/etc/alpine-release').exists?
   exit
 end
 
-describe command('mkdir /home/bar') do
+describe command('mkdir -p /home/bar') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -42,7 +42,7 @@ describe command('echo "bar:joypass123" | chpasswd') do
   its(:exit_status) { should eq 0 }
 end
 
-describe command('mkdir /opt/bar') do
+describe command('mkdir -p /opt/bar') do
   its(:exit_status) { should eq 0 }
 end
 
