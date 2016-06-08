@@ -22,9 +22,12 @@ set_property properties[host]
 
 options = Net::SSH::Config.for(host)
 
-options[:user] ||= Etc.getlogin
-
 set :host,        options[:host_name] || host
+
+# Get HostName and User value from Env Vars if available
+options[:host_name] ||= ENV['TARGET_HOST_NAME']
+options[:user] ||= ENV['TARGET_USER_NAME']
+
 set :ssh_options, options
 
 # Disable sudo
