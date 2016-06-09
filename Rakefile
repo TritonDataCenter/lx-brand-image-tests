@@ -14,6 +14,10 @@ namespace :serverspec do
     desc "Run serverspec to #{key}"
     RSpec::Core::RakeTask.new(key.split('.')[0].to_sym) do |t|
       ENV['TARGET_HOST'] = key
+      puts ""
+      puts "Running tests on:"
+      puts "    " + key
+      puts ""
       t.pattern = 'spec/{' + properties[key][:roles].join(',') + '}/*_spec.rb'
     end
   end
