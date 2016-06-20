@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe service('cron') do
+describe service('crond') do
   it { should be_enabled }
 end
 
