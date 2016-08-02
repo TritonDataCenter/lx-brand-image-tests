@@ -30,3 +30,7 @@ options[:host_name] ||= ENV['TARGET_HOST_NAME']
 options[:user] ||= ENV['TARGET_USER_NAME']
 
 set :ssh_options, options
+
+# Don't save hosts to ~/.ssh/known_hosts
+# When testing it's very common for the IPs to get reused and cause a mismatch
+set :user_known_hosts_file, '/dev/null'
