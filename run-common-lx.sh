@@ -118,12 +118,12 @@ choose_package() {
 get_networks() {
 	echo "Getting networks:"
     
-    PUBLIC_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === true')
-	PRIVATE_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === false' -c 'this.fabric !== true')
+    PUBLIC_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === true' | head -1)
+	PRIVATE_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === false' -c 'this.fabric !== true' | head -1)
     
     # Trying using a fabric network instead
     if [[ -z "$PRIVATE_NETWORK" ]]; then
-        PRIVATE_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === false')
+        PRIVATE_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === false' | head -1)
     fi
     
     echo "    Public:  $PUBLIC_NETWORK"
