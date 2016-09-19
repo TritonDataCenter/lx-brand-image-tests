@@ -8,10 +8,8 @@ describe package('less') do
   it { should be_installed }
 end
 
-# On CentOS the package is called vim-enhanced
-
-# TODO: Check for /etc/redhat-release ?
-if property[:name].include? "CentOS"
+# On CentOS and Fedora the package is called vim-enhanced
+if file('/etc/redhat-release').exists?
   describe package('vim-enhanced') do
     it { should be_installed }
   end
