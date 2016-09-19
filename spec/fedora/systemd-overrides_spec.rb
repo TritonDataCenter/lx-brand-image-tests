@@ -21,7 +21,7 @@ describe "httpd service validation" do
     end
   
     describe "Install of httpd package should succeed" do
-      describe command('yum -y install httpd') do
+      describe command('dnf -y install httpd') do
         its(:exit_status) { should eq 0 }
       end
       describe command('systemctl restart httpd') do
@@ -33,7 +33,7 @@ describe "httpd service validation" do
       it { should be_running }
     end
     
-    describe command('yum -y erase httpd') do
+    describe command('dnf -y erase httpd') do
       its(:exit_status) { should eq 0 }
     end
     
