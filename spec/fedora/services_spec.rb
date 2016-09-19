@@ -12,3 +12,7 @@ describe service('sshd') do
   it { should be_enabled }
 end
 
+describe service('timedatex') do
+  it { should be_enabled }
+end
+
