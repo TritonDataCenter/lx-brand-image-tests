@@ -38,3 +38,22 @@ describe "httpd service validation" do
     its(:exit_status) { should eq 0 }
   end
 end
+
+describe file('/etc/systemd/system/timedatex.service.d/override.conf') do
+  if file('/usr/sbin/timedatex').exists?
+    it { should be_file }
+    its(:content) { should match /[Service]/ }
+    its(:content) { should match /PrivateTmp=no/ }
+    its(:content) { should match /PrivateDevices=no/ }
+    its(:content) { should match /PrivateNetwork=no/ }
+    its(:content) { should match /ProtectSystem=no/ }
+    its(:content) { should match /ProtectHome=no/ }
+  end
+end
+
+describe command('timedatex') do
+  if file('/usr/sbin/timedatex').exists?
+    its(:exit_status) { should eq 0 }
+  end
+end
+
