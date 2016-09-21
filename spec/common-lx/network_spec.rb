@@ -3,8 +3,3 @@ describe host('google.com') do
   it { should be_reachable }
   it { should be_resolvable }
 end
-
-describe host('joyent.com') do
-  it { should be_reachable }
-  it { should be_resolvable }
-end
