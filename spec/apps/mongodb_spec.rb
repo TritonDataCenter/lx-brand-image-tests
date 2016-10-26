@@ -23,3 +23,27 @@ end
 describe command('grep -q Ubuntu /etc/product && mongostat -n 5') do
   its(:exit_status) { should eq 0 }
 end
+
+# Ubuntu MongoDB server grab delicious file
+
+describe command('grep -q Ubuntu /etc/product && wget http://randomwalker.info/data/delicious/delicious-rss-1250k.gz') do
+  its(:exit_status) { should eq 0 }
+end
+
+# Ubuntu MongoDB server gunzip delicious file
+
+describe command('grep -q Ubuntu /etc/product && gunzip delicious-rss-1250k.gz') do
+  its(:exit_status) { should eq 0 }
+end
+
+# Ubuntu MongoDB server mongoimport delicious file
+
+describe command('grep -q Ubuntu /etc/product && mongoimport --db db1 --collection docs < delicious-rss-1250k') do
+  its(:exit_status) { should eq 0 }
+end
+  
+# Ubuntu MongoDB server mongodump delicious db1
+
+describe command('grep -q Ubuntu /etc/product && mongodump -o dumpfile1') do
+  its(:exit_status) { should eq 0 }
+end
