@@ -27,17 +27,10 @@ THREADS=10
 #===============================================================================
 
 IMAGE=
-PROFILE=
 PACKAGE=
-IMAGENAME=
-VERSION=
-UUID=
-NAME=
+PROFILE=
 IP1=
 IP2=
-TAG="test-instance=true"
-SCRIPT=$PWD/userscript.sh
-METADATAFILE="user-data=$PWD/user-data"
 DATE=`date +%H%M%S`
 
 usage() {
@@ -105,7 +98,6 @@ get_image_details() {
     IMAGEDETAILS=$(triton -p ${PROFILE} image get $1 | json -a name version id)
     IMAGENAME=$(echo $IMAGEDETAILS | cut -d ' ' -f 1)
     VERSION=$(echo $IMAGEDETAILS | cut -d ' ' -f 2)
-    UUID=$(echo $IMAGEDETAILS | cut -d ' ' -f 3)
     echo "    $IMAGEDETAILS"
     echo ""
 }
@@ -113,9 +105,6 @@ get_image_details() {
 get_package_details() {
     echo "Getting package details:"
     PACKAGEDETAILS=$(triton -p ${PROFILE} package get $1 | json -a name version id)
-    PACKAGENAME=$(echo $PACKAGEDETAILS | cut -d ' ' -f 1)
-    PACKAGEVERSION=$(echo $PACKAGEDETAILS | cut -d ' ' -f 2)
-    PACKAGEUUID=$(echo $PACKAGEDETAILS | cut -d ' ' -f 3)
     echo "    $PACKAGEDETAILS"
     echo ""
 }
@@ -127,31 +116,13 @@ set_name() {
     echo ""
 }
 
-get_networks() {
-	echo "Getting networks:"
-    
-    PUBLIC_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === true' | head -1)
-	PRIVATE_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === false' -c 'this.fabric !== true' | head -1)
-    
-    # Trying using a fabric network instead
-    if [[ -z "$PRIVATE_NETWORK" ]]; then
-        PRIVATE_NETWORK=$(triton -p ${PROFILE} network list -j | json -ag id -c 'this.public === false' | head -1)
-    fi
-    
-    echo "    Public:  $PUBLIC_NETWORK"
-    echo "    Private: $PRIVATE_NETWORK"
-    echo ""
-}
-
 create_instance() {
     echo "Creating instance ${1}:"
-    triton -p ${PROFILE} instance create -w -n $1 -N $PUBLIC_NETWORK -N $PRIVATE_NETWORK -t $TAG --script=$SCRIPT -M $METADATAFILE $2 $3
+    triton -p ${PROFILE} instance create -w -n $1 $2 $3
 }
 
 cleanup() {
     echo "Cleaning up."
-    rm -rf userscript.sh
-    rm -rf user-data
     unset TARGET_HOST_NAME
     unset TARGET_USER_NAME
     unset TEST
@@ -171,36 +142,6 @@ cleanup() {
 get_image_details $IMAGE
 get_package_details $PACKAGE
 set_name
-get_networks
-
-cat <<USERSCRIPT >userscript.sh
-#!/bin/sh
-echo "testing user-script" >> /var/tmp/test
-hostname \`cat /etc/hostname\`
-USERSCRIPT
-
-cat <<USERDATA >user-data
-This is user-data!
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore 
-eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt 
-in culpa qui officia deserunt mollit anim id est laborum.
-USERDATA
-
-#--------------------------------------------------------------------
-# Creating 3 instances:
-#
-
-#create_instance ${NAME}_1 $IMAGE $PACKAGE
-#create_instance ${NAME}_2 $IMAGE $PACKAGE
-#create_instance ${NAME}_3 $IMAGE $PACKAGE
-
-#IP1=`triton -p ${PROFILE} instance ip ${NAME}_1`
-#IP2=`triton -p ${PROFILE} instance ip ${NAME}_2`
-#IP3=`triton -p ${PROFILE} instance ip ${NAME}_3`
 
 #--------------------------------------------------------------------
 # Test Set A1: Installing and configuring Cassandra on the first node
