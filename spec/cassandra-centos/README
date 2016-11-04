@@ -1,0 +1,27 @@
+This test will only work for lx images that have CentOS 6 or 7 operating system.
+
+To run the test, you need to execute a bash shell script on a Linux test client machine,
+which will then exercise the test cases, written in Ruby, and using the serverspec
+test framework.
+  
+The reason you have to execute the bash shell script for this test (as opposed to
+just running the serverspec test script directly using rake) is that this is more of
+integration test suite that creates multiple instances, installs and configures
+software on the instances, then starts the server and test client processes in a
+certain order.
+
+1) On a Linux test client machine, do git clone:
+   https://github.com/joyent/lx-brand-image-tests.
+
+2) Cd to the "lx-brand-image-tests" directory, and execute the following command:
+
+	./run-cassandra-centos.sh
+
+	(This is print out the usage statements for you.)
+
+3) To start the test, execute the script "run-cassandra-centos.sh" with the correct
+   parameter values.  For example:
+
+	./run-cassandra-centos.sh -i centos-7 -k g4-general-8G -p us-east-3b
+
+   You can enter either the Name or the UUID for <IMAGE> or <PACKAGE>.
