@@ -17,6 +17,6 @@ end
 # Node 6.x
 if property[:name] =~ /v6./
   describe command('node -v') do
-    its(:stdout) { should contain('v6.7.0') }
+    its(:stdout) { should contain('v6.9.1') }
   end
 end
