@@ -1,35 +1,136 @@
 require 'spec_helper'
 
-# Ubuntu MySQL install and select test
+# Ubuntu and Debian tests
+# MySQL install and select test
+if file('/etc/debian_version').exists?
+  describe command('apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get -q -y install mysql-server') do
+    its(:exit_status) { should eq 0 }
+  end
 
-describe command('grep -q Ubuntu /etc/product && apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get -q -y install mysql-server && mysql -uroot -e "select * from mysql.user;"') do
-  its(:exit_status) { should eq 0 }
-end
+  # MySQL create and drop database test
+  describe command('mysql -uroot -e "create database test1;" && mysql -uroot -e "drop database test1;"') do
+    its(:exit_status) { should eq 0 }
+  end
 
-# Ubuntu MySQL create and drop database test
+  # Sysbench install and oltp simple test (read only)
+  describe command('apt-get install -y sysbench && mysql -uroot -e "create database test;" && sysbench --db-driver=mysql --oltp-test-mode=simple --num-threads=12 --test=oltp --mysql-host=localhost --mysql-user=root --mysql-db=test --oltp-table-size=5000000 prepare && sysbench --oltp-test-mode=simple --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=localhost --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
+    its(:exit_status) { should eq 0 }
+  end
 
-describe command('grep -q Ubuntu /etc/product && mysql -uroot -e "create database test1;" && mysql -uroot -e "drop database test1;"') do
-  its(:exit_status) { should eq 0 }
-end
+  # Sysbench install and oltp complex test (read and write)
+  describe command('sysbench --oltp-test-mode=complex --db-driver=mysql --num-threads=1 --test=oltp --mysql-host=localhost --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
+    its(:exit_status) { should eq 0 }
+  end
 
-# Ubuntu Sysbench install and oltp simple test (read only)
+  # mysqldump of test database
+  describe command('mysqldump -uroot test > /root/test.sql') do
+    its(:exit_status) { should eq 0 }
+  end
 
-describe command('grep -q Ubuntu /etc/product && apt-get install -y sysbench && mysql -uroot -e "create database test;" && sysbench --db-driver=mysql --oltp-test-mode=simple --num-threads=12 --test=oltp --mysql-host=localhost --mysql-user=root --mysql-db=test --oltp-table-size=5000000 prepare && sysbench --oltp-test-mode=simple --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=localhost --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
-  its(:exit_status) { should eq 0 }
-end
+  # mysqlimport of test database
+  describe command('mysql -uroot -e "create database test2;" && mysql -uroot test2 < /root/test.sql') do
+    its(:exit_status) { should eq 0 }
+  end
 
-# Ubuntu Sysbench install and oltp complex test (read and write)
+  # MySQL replication setup
+  # Setup master and slave configuration files
+  describe command('service mysql stop') do
+    its(:exit_status) { should eq 0 }
+  end
 
-describe command('grep -q Ubuntu /etc/product && sysbench --oltp-test-mode=complex --db-driver=mysql --num-threads=1 --test=oltp --mysql-host=localhost --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
-  its(:exit_status) { should eq 0 }
-end
+  describe command('sed -i "/skip-external-locking/a \server-id = 1\nlog-bin = mysqld-bin" /etc/mysql/my.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
 
-# Ubuntu mysqldump of test database
-describe command('grep -q Ubuntu /etc/product && mysqldump -uroot test > /root/test.sql') do
-  its(:exit_status) { should eq 0 }
-end
+  describe command('cp /etc/mysql/my.cnf /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
 
-# Ubuntu mysqlimport of test database
-describe command('grep -q Ubuntu /etc/product && mysql -uroot -e "create database test2;" && mysql -uroot test2 < /root/test.sql') do
-  its(:exit_status) { should eq 0 }
+  describe command('sed -i "s/mysqld-bin/mysqldslave-bin/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sed -i "s/3306/3307/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sed -i "s/mysqld\.sock/mysqldslave\.sock/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sed -i "s/mysqld\.pid/mysqldslave\.pid/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sed -i "s/lib\/mysql/lib\/mysqlslave/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sed -i "s/server-id = 1/server-id = 2/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sed -i "s/error\.log/errorslave\.log/g" /etc/mysql/my.slave.cnf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  # Setup slave datadir
+  describe command('mkdir /var/lib/mysqlslave && mysql_install_db --datadir=/var/lib/mysqlslave --defaults-file=/etc/mysql/my.slave.cnf --skip-name-resolve && chown -R mysql:mysql /var/lib/mysqlslave') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  # Start master and slave with new configurations
+  describe command('service mysql start') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('printf "start on filesystem\nscript\n   /usr/sbin/mysqld --defaults-file=/etc/mysql/my.slave.cnf\nend script" > /etc/init/mysqlslave.conf') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('ln -s /etc/init/mysqlslave.conf /etc/init.d/mysqlslave') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('service mysqlslave start') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  # Dump master and import into slave
+  describe command('sleep 5 && mysqldump -uroot --master-data=2 -A --ignore-table=mysql.user --ignore-table=mysql.host --ignore-table=mysql.tables_priv --ignore-table=mysql.servers --ignore-table=mysql.db > masterdump.sql') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('sleep 10 && mysql --socket=/var/run/mysqld/mysqldslave.sock < /root/masterdump.sql') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  # Configure replication
+  describe command('mysql -sN -e "grant replication slave, replication client on *.* to \'slave\'@\'%\' identified by \'pass123\'" 2> /dev/null') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('mysql -sN -e "flush privileges" 2> /dev/null') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "stop slave"') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "reset master"') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "reset slave"') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "CHANGE MASTER TO master_user=\'slave\', master_password=\'pass123\', master_host=\'127.0.0.1\';"') do
+    its(:exit_status) { should eq 0 }
+  end
+
+  describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "start slave"') do
+    its(:exit_status) { should eq 0 }
+  end
 end
