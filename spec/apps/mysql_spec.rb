@@ -19,7 +19,7 @@ if ! file('/var/lib/mysql').exists?
     end
 
     # Sysbench install and oltp complex test (read and write)
-    describe command('sysbench --oltp-test-mode=complex --db-driver=mysql --num-threads=1 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
+    describe command('sysbench --oltp-test-mode=complex --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
       its(:exit_status) { should eq 0 }
     end
 
