@@ -14,12 +14,12 @@ if ! file('/var/lib/mysql').exists?
     end
 
     # Sysbench install and oltp simple test (read only)
-    describe command('apt-get install -y sysbench && mysql -uroot -e "create database test;" && sysbench --db-driver=mysql --oltp-test-mode=simple --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=5000000 prepare && sysbench --oltp-test-mode=simple --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
+    describe command('apt-get install -y sysbench && mysql -uroot -e "create database test;" && sysbench --db-driver=mysql --oltp-test-mode=simple --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=500000 prepare && sysbench --oltp-test-mode=simple --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=500000 --max-requests=500000 run') do
       its(:exit_status) { should eq 0 }
     end
 
     # Sysbench install and oltp complex test (read and write)
-    describe command('sysbench --oltp-test-mode=complex --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=5000000 --max-requests=500000 run') do
+    describe command('sysbench --oltp-test-mode=complex --db-driver=mysql --num-threads=12 --test=oltp --mysql-host=127.0.0.1 --mysql-user=root --mysql-db=test --oltp-table-size=500000 --max-requests=500000 run') do
       its(:exit_status) { should eq 0 }
     end
 
@@ -134,5 +134,10 @@ if ! file('/var/lib/mysql').exists?
     describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "start slave"') do
       its(:exit_status) { should eq 0 }
     end
+    
+    # Check that replication is good
+    describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -s -e "show slave status \G"') do
+      its(:stdout) { should match /Slave_IO_Running: Yes/ }
+      its(:stdout) { should match /Slave_SQL_Running: Yes/ }
   end
 end
