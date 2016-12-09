@@ -252,9 +252,9 @@ wait_for_IP $CUSTOM_INSTANCE_NAME
 test_image $CUSTOM_INSTANCE_NAME
 
 echo "Deleting instance and custom image"
-ssh-keygen -q -R $(triton inst ip $INSTACE_NAME)
+ssh-keygen -q -R $(triton -p ${PROFILE} inst ip $INSTACE_NAME)
 delete_instance $INSTACE_NAME
-ssh-keygen -q -R $(triton inst ip $CUSTOM_INSTANCE_NAME)
+ssh-keygen -q -R $(triton -p ${PROFILE} inst ip $CUSTOM_INSTANCE_NAME)
 delete_instance $CUSTOM_INSTANCE_NAME
 delete_image $CUSTOM_IMAGE_NAME
 cleanup
