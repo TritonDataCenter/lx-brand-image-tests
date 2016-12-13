@@ -134,7 +134,9 @@ get_networks() {
 }
 
 cat <<USERSCRIPT >userscript.sh
-#!/bin/sh
+#!/usr/bin/env bash
+
+set -x
 
 echo "testing user-script" >> /var/tmp/test
 hostname $IMAGENAME
