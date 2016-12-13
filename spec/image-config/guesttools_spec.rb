@@ -61,3 +61,8 @@ describe file('/var/log/triton.log') do
   it { should be_file }
   it { should be_owned_by 'root' }
 end
+
+describe file('/var/log/mdata-user-script.log') do
+  it { should be_file }
+  it { should be_owned_by 'root' }
+end
