@@ -9,7 +9,8 @@ describe file('/var/svc/mdata-user-script') do
 	it { should be_file }
   it { should be_owned_by 'root' }
   it { should be_executable }
-  its(:content) { should match /#!\/bin\/sh/ }
+  its(:content) { should match /#!\/usr\/bin\/env bash/ }
+  its(:content) { should match /set -x/ } 
   its(:content) { should match /echo "testing user-script" >> \/var\/tmp\/test/ }
 end
 
