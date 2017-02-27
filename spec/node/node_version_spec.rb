@@ -3,7 +3,7 @@ require 'spec_helper'
 # Node 4.x
 if property[:name] =~ /v4./
   describe command('node -v') do
-    its(:stdout) { should contain('v4.7.3') }
+    its(:stdout) { should contain('v4.8.0') }
   end
 end
 
