@@ -43,7 +43,15 @@ describe command('npm install async') do
   its(:exit_status) { should eq 0 }
 end
 
+describe command('npm rm async') do
+  its(:exit_status) { should eq 0 }
+end
+
 describe command('npm install bunyan') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('npm rm bunyan') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -51,7 +59,15 @@ describe command('npm install express') do
   its(:exit_status) { should eq 0 }
 end
 
+describe command('npm rm express') do
+  its(:exit_status) { should eq 0 }
+end
+
 describe command('npm install hapi') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('npm rm hapi') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -59,7 +75,15 @@ describe command('npm install mocha') do
   its(:exit_status) { should eq 0 }
 end
 
+describe command('npm rm mocha') do
+  its(:exit_status) { should eq 0 }
+end
+
 describe command('npm install moment') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('npm rm moment') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -67,7 +91,15 @@ describe command('npm install mongoose') do
   its(:exit_status) { should eq 0 }
 end
 
+describe command('npm rm mongoose') do
+  its(:exit_status) { should eq 0 }
+end
+
 describe command('npm install request') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('npm rm request') do
   its(:exit_status) { should eq 0 }
 end
 
@@ -75,10 +107,22 @@ describe command('npm install restify') do
   its(:exit_status) { should eq 0 }
 end
 
+describe command('npm rm restify') do
+  its(:exit_status) { should eq 0 }
+end
+
 describe command('npm install socket.io') do
   its(:exit_status) { should eq 0 }
 end
 
+describe command('npm rm socket.io') do
+  its(:exit_status) { should eq 0 }
+end
+
 describe command('npm install underscore') do
+  its(:exit_status) { should eq 0 }
+end
+
+describe command('npm rm underscore') do
   its(:exit_status) { should eq 0 }
 end
