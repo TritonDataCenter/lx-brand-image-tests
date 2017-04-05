@@ -173,6 +173,18 @@ wait_for_IP() {
     echo "IP is now live."
 }
 
+wait_for_ssh() {
+    local INST_NAME=$1
+    local COUNT=0
+    echo "Checking ssh on $INST_NAME"
+    # Time out after a minute
+    while [[ true || "$COUNT" -gt 60 ]]; do
+        ssh -q root@$(triton -p ${PROFILE} instance ip $INST_NAME) exit > /dev/null && break;
+        sleep 1
+        COUNT=$((COUNT+1))
+    done
+}
+
 test_image() {
     NAME=$1
     
@@ -233,8 +245,11 @@ cleanup() {
 get_image_details $IMAGE
 choose_package
 get_networks
+
 create_instance $IMAGE ${IMAGENAME}-${VERSION}-${DATE}
 wait_for_IP $NAME
+wait_for_ssh $NAME
+
 test_image $NAME
 
 INSTACE_NAME=$NAME
@@ -251,6 +266,8 @@ CUSTOM_INSTANCE_NAME=${IMAGENAME}-${VERSION}-${DATE}-CUSTOM
 
 create_instance $CUSTOM_IMAGE_NAME $CUSTOM_INSTANCE_NAME
 wait_for_IP $CUSTOM_INSTANCE_NAME
+wait_for_ssh $CUSTOM_INSTANCE_NAME
+
 test_image $CUSTOM_INSTANCE_NAME
 
 echo "Deleting instance and custom image"
