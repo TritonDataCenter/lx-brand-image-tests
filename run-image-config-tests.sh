@@ -8,7 +8,7 @@ set -euo pipefail
 
 IFS=$'\n\t'
 
-DATE=`date +%H%M%S`
+DATE=$(date +%H%M%S)
 
 usage() {
 cat <<EOF
