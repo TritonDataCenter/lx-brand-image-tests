@@ -178,11 +178,17 @@ wait_for_ssh() {
     local COUNT=0
     echo "Checking ssh on $INST_NAME"
     # Time out after a minute
-    while [[ true || "$COUNT" -gt 60 ]]; do
+    while [[ "$COUNT" -lt 60 ]]; do
+        echo -n "."
         ssh -q root@$(triton -p ${PROFILE} instance ip $INST_NAME) exit > /dev/null && break;
         sleep 1
         COUNT=$((COUNT+1))
     done
+    
+    if [[ "$COUNT" -ge 60 ]]; then
+      echo "ssh timed out after ~60 seconds"
+      exit 1
+    fi
 }
 
 test_image() {
