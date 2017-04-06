@@ -6,5 +6,5 @@ end
 
 describe command('mysqld --version') do
   its(:exit_status) { should eq 0 }
-  its(:stdout) { should match /5\.7\.*/ }
+  its(:stdout) { should match /5\.7\.17*/ }
 end
