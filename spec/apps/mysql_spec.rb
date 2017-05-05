@@ -142,7 +142,11 @@ if ! file('/var/lib/mysql').exists?
     end
     
     # mysqlimport to test slave
-    describe command('mysql -uroot -e "create database testslave;" && mysql -uroot testslave < /root/test.sql') do
+    describe command('mysql -uroot -e "create database testslave;"') do
+      its(:exit_status) { should eq 0 }
+    end
+    
+    describe command('mysql -uroot testslave < /root/test.sql') do
       its(:exit_status) { should eq 0 }
     end
   end
