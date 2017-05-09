@@ -84,19 +84,19 @@ if ! file('/var/lib/mysql').exists?
     describe command('service mysql start') do
       its(:exit_status) { should eq 0 }
     end
-
-    describe command('printf "start on filesystem\nscript\n   /usr/sbin/mysqld --defaults-file=/etc/mysql/my.slave.cnf\nend script" > /etc/init/mysqlslave.conf') do
+    
+    describe command('printf "/usr/bin/mysqld_safe --defaults-file=/etc/mysql/my.slave.cnf > /dev/null 2>&1 &" > /etc/init.d/mysqlslave') do
       its(:exit_status) { should eq 0 }
     end
 
-    describe command('ln -s /etc/init/mysqlslave.conf /etc/init.d/mysqlslave') do
+    describe command('chmod +x /etc/init.d/mysqlslave') do
       its(:exit_status) { should eq 0 }
     end
 
-    describe command('service mysqlslave start') do
+    describe command('/etc/init.d/mysqlslave') do
       its(:exit_status) { should eq 0 }
     end
-
+    
     # Dump master and import into slave
     describe command('sleep 5 && mysqldump -uroot --master-data=2 -A --ignore-table=mysql.user --ignore-table=mysql.host --ignore-table=mysql.tables_priv --ignore-table=mysql.servers --ignore-table=mysql.db > masterdump.sql') do
       its(:exit_status) { should eq 0 }
