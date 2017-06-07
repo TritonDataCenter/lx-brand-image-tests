@@ -3,7 +3,7 @@ require 'spec_helper'
 # Ubuntu and Debian tests
 # MongoDB install and version test
 if file('/etc/debian_version').exists?
-  describe command('apt-get install -y mongodb && mongo --eval="db.version();"') do
+  describe command('apt-get update -y && apt-get install -y mongodb && mongo --eval="db.version();"') do
     its(:exit_status) { should eq 0 }
   end
 
