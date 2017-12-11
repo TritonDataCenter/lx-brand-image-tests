@@ -104,7 +104,7 @@ if ! file('/etc/centos-release').exists?
     it { should exist }
   end
 
-  describe command('mount -o remount,size=5% /dev/shm') do
+  describe command('mount -o remount,size=2% /dev/shm') do
     its(:exit_status) { should eq 0 }
   end
 end
