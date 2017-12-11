@@ -103,7 +103,11 @@ if ! file('/etc/centos-release').exists?
   describe file('/dev/shm') do
     it { should exist }
   end
-
+  
+  describe command('sleep 600') do
+    its(:exit_status) { should eq 0 }
+  end
+  
   describe command('mount -o remount,size=2% /dev/shm') do
     its(:exit_status) { should eq 0 }
   end
