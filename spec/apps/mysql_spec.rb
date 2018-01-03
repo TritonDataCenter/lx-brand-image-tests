@@ -136,17 +136,26 @@ if ! file('/var/lib/mysql').exists?
     end
     
     # Check that replication is good
-    describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -s -e "show slave status \G"') do
+    describe command('sleep 10 && mysql --socket=/var/run/mysqld/mysqldslave.sock -s -e "show slave status \G"') do
       its(:stdout) { should match /Slave_IO_Running: Yes/ }
       its(:stdout) { should match /Slave_SQL_Running: Yes/ }
     end
     
-    # mysqlimport to test slave
-    describe command('mysql -uroot -e "create database testslave;"') do
+    # Stop and start slave again
+    describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "stop slave"') do
+      its(:exit_status) { should eq 0 }
+    end
+
+    describe command('mysql --socket=/var/run/mysqld/mysqldslave.sock -sN -e "start slave"') do
       its(:exit_status) { should eq 0 }
     end
     
-    describe command('mysql -uroot testslave < /root/test.sql') do
+    # mysqlimport to test slave
+    describe command('sleep 10 && mysql -uroot -e "create database testslave;"') do
+      its(:exit_status) { should eq 0 }
+    end
+    
+    describe command('sleep 10 && mysql -uroot testslave < /root/test.sql') do
       its(:exit_status) { should eq 0 }
     end
   end
